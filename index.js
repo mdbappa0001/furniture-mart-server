@@ -26,29 +26,7 @@ app.get('/service', async(req,res)=>{
   res.send(services);
 })
 
- //get one data by Id------------ 
- app.get('/service/:id', async (req, res) => {
-  const id = req.params.id;
-  const query = { _id: ObjectId(id) }
-  const service = await serviceCollection.findOne(query)
-  res.send(service)
-})
 
-
- // update ---------------------
- app.put('/update/:id', async (req, res) => {
-  const id = req.params;
-  const updatedQuantity = req.body;
-  const filter = { _id: ObjectId(id) }
-  const options = { upsert: true }
-  const updatedDoc = {
-      $set: {
-          quantity: updatedQuantity.newQuantityTotal
-      }
-  }
-  const result = await serviceCollection.updateOne(filter, updatedDoc, options)
-  res.send(result)
-})
 
 
 }
