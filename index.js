@@ -35,7 +35,20 @@ app.get('/service', async(req,res)=>{
 })
 
 
-
+ // update ---------------------
+ app.put('/update/:id', async (req, res) => {
+  const id = req.params;
+  const updatedQuantity = req.body;
+  const filter = { _id: ObjectId(id) }
+  const options = { upsert: true }
+  const updatedDoc = {
+      $set: {
+          quantity: updatedQuantity.newQuantityTotal
+      }
+  }
+  const result = await serviceCollection.updateOne(filter, updatedDoc, options)
+  res.send(result)
+})
 
 
 }
