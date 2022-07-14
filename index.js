@@ -10,6 +10,9 @@ app.use(cors());
 app.use(express.json());
 
 
+
+
+
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.xdcuw.mongodb.net/?retryWrites=true&w=majority`;
 
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
@@ -32,6 +35,21 @@ app.get('/service', async(req,res)=>{
   const query = { _id: ObjectId(id) }
   const service = await serviceCollection.findOne(query)
   res.send(service)
+});
+
+
+ // get data by email 
+ app.get('/my-items', verifyJWT, async (req, res) => {
+  const decodedEmail = req.decoded.email;
+  const email = req.query.email;
+  if (email === decodedEmail) {
+      const query = { email: email }
+      const cursor = serviceCollection.find(query)
+      const result = await cursor.toArray()
+      res.send(result)
+  } else {
+      res.send(403).send({ message: 'Forbidden Access' })
+  }
 })
 
 
