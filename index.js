@@ -53,9 +53,9 @@ app.get('/service', async(req,res)=>{
 
    // post & update data **********************
         // post data ----------------------
-        app.post('/books', async (req, res) => {
-          const book = req.body;
-          const result = await bookCollection.insertOne(book)
+        app.post('/service', async (req, res) => {
+          const service = req.body;
+          const result = await serviceCollection.insertOne(service)
           res.send(result)
       })
 
